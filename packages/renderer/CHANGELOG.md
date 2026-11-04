@@ -1,5 +1,23 @@
 # @ifc-lite/renderer
 
+## 7.2.0
+
+### Minor Changes
+
+- [#8794](https://github.com/LTplus-AG/ifc-lite/pull/8794) [`b39b157`](https://github.com/LTplus-AG/ifc-lite/commit/b39b1578fd76588b4d8d7c267cbb5da50b9e9868) Thanks [@louistrue](https://github.com/louistrue)! - IfcAnnotation overlays now follow the model ([#8767](https://github.com/LTplus-AG/ifc-lite/issues/8767)). In 3D, annotation lines, filled regions and labels are clipped by the section plane, any extra cutting planes and the clip box, the same way the model's geometry is. A label disappears whole once its anchor is cut away. Clipping is opt-in with a new `sectionClipped` flag, default `false`, so existing callers see no change: as an option on `Renderer.setLineOverlay(channel, vertices, { sectionClipped })` (new `LineOverlayOptions` type) and as a field on `SymbolicFillInput` and `SymbolicTextInput`. The grid and the other reference layers still draw whole. In the viewer, annotations also respect isolation: isolating elements, soloing a storey or filtering by class now hides annotations outside that set, the same as it does for meshes.
+
+- [#8743](https://github.com/LTplus-AG/ifc-lite/pull/8743) [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd) Thanks [@louistrue](https://github.com/louistrue)! - The internal, unqualified Gaussian adapter composes splats with transparent IFC by a nearest-glass split: splats behind the nearest transparent layer draw before it, the rest after it, per sample. This is exact where a sample has at most one transparent layer, and for splats behind or in front of every layer; splats between two layers stay approximate. It covers perspective and orthographic views, 1x and 4x MSAA, and every transparent draw path (including X-Ray ghosts). Frames without transparent IFC keep the single splat pass, and frames without visible splats record nothing extra. `GaussianSplatStats.composition` now reports the last splat frame (`nearest-glass-split`, `no-transparent`, or `over-transparent-approximate` with a fallback reason). Details are in the new `compositionReport`: whether a sample of that frame had two or more transparent layers, and whether the highlight or points, reference images and overlays drew after splats behind the glass. Those keep their established order after transparent IFC. A failed split pass falls back to one splat pass (`split-failed`). `gaussianSplats.setCompositionMode('single-pass')` keeps the old pass. Readiness stays `blocked`: the blocker tuple is unchanged, and the new capability is `nearest-glass-split`. Exports `GaussianComposition`, `GaussianCompositionFallback`, `GaussianCompositionMode`, `GaussianCompositionReport` and `GaussianTransparentLayers`.
+
+### Patch Changes
+
+- [#8743](https://github.com/LTplus-AG/ifc-lite/pull/8743) [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd) Thanks [@louistrue](https://github.com/louistrue)! - Keep the Gaussian glass split enabled across expected visibility compilation, and contain layer readback failures while releasing mapped buffers and query slots.
+
+- [#8778](https://github.com/LTplus-AG/ifc-lite/pull/8778) [`d4e4533`](https://github.com/LTplus-AG/ifc-lite/commit/d4e4533046dc18eeb3eec1a838221c069cbe9ddb) Thanks [@louistrue](https://github.com/louistrue)! - Support whole-scene Gaussian render-frame translations without rewriting packed local rows or enlarging the precision envelope. Captures can follow a federation origin established after they load.
+
+- [#8743](https://github.com/LTplus-AG/ifc-lite/pull/8743) [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd) Thanks [@louistrue](https://github.com/louistrue)! - Reset Gaussian composition reporting when renderer resources are released after device loss, teardown or rebuild.
+
+- [#8743](https://github.com/LTplus-AG/ifc-lite/pull/8743) [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd) Thanks [@louistrue](https://github.com/louistrue)! - Stop encoding splats after a split-frame failure and request a sticky single-pass redraw until device recovery or renderer rebuild. Report the failed frame as possibly incomplete.
+
 ## 7.1.0
 
 ### Minor Changes

@@ -1,5 +1,14 @@
 # @ifc-lite/viewer-embed
 
+## 1.15.29
+
+### Patch Changes
+
+- Updated dependencies [[`b39b157`](https://github.com/LTplus-AG/ifc-lite/commit/b39b1578fd76588b4d8d7c267cbb5da50b9e9868), [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd), [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd), [`d4e4533`](https://github.com/LTplus-AG/ifc-lite/commit/d4e4533046dc18eeb3eec1a838221c069cbe9ddb), [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd), [`cc5dcbd`](https://github.com/LTplus-AG/ifc-lite/commit/cc5dcbd4ee6cf35d624b0247edbb89ef35381c6e), [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd)]:
+  - @ifc-lite/renderer@7.2.0
+  - @ifc-lite/pointcloud@0.15.0
+  - @ifc-lite/ifcx@4.6.1
+
 ## 1.15.28
 
 ### Patch Changes

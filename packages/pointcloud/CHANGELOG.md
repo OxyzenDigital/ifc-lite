@@ -1,5 +1,11 @@
 # @ifc-lite/pointcloud
 
+## 0.15.0
+
+### Minor Changes
+
+- [#8782](https://github.com/LTplus-AG/ifc-lite/pull/8782) [`cc5dcbd`](https://github.com/LTplus-AG/ifc-lite/commit/cc5dcbd4ee6cf35d624b0247edbb89ef35381c6e) Thanks [@louistrue](https://github.com/louistrue)! - Load E57, PLY and LAS point clouds larger than 4 GB. `streamPointCloud` now applies its 4 GB default `maxFileSize` only to formats whose source reads the whole file (PCD, PTS, XYZ, LAZ); E57, PLY and LAS stream from bounded windows and have no default ceiling. LAS strided reads are now capped at 16 MiB per read, so LAS peak memory no longer grows with file size. An explicit `maxFileSize` still applies to every format ([#8773](https://github.com/LTplus-AG/ifc-lite/issues/8773)).
+
 ## 0.14.0
 
 ### Minor Changes

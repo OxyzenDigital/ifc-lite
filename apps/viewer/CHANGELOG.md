@@ -1,5 +1,21 @@
 # @ifc-lite/viewer
 
+## 5.6.0
+
+### Minor Changes
+
+- [#8745](https://github.com/LTplus-AG/ifc-lite/pull/8745) [`f60a4cb`](https://github.com/LTplus-AG/ifc-lite/commit/f60a4cb1edf63a97d73eaf51a182250937f80797) Thanks [@louistrue](https://github.com/louistrue)! - Gaussian splat captures (Gaussian PLY and `.splat`) now open in the production viewer by default ([#8568](https://github.com/LTplus-AG/ifc-lite/issues/8568)). Pickers and drop offer `.splat`; a Gaussian `.ply` is still told apart from a point-cloud `.ply` by content. Published limits are checked before decoding, with a translated message: 500 MB per capture, 1,000,000 splats per scene, spherical-harmonics degree 3, and a WebGPU device. The capture panel and the new user guide disclose the limitations: approximate composition with glass/X-ray, clipping by Gaussian centre, uncalibrated captures, no picking, measurement or snapping, and no export (export dialogs now say so and never offer a capture as a source). Building with `VITE_GAUSSIAN_SPLATS=disabled` is the kill switch. Content-free diagnostics report load outcomes and device loss/recovery counts.
+
+### Patch Changes
+
+- [#8794](https://github.com/LTplus-AG/ifc-lite/pull/8794) [`b39b157`](https://github.com/LTplus-AG/ifc-lite/commit/b39b1578fd76588b4d8d7c267cbb5da50b9e9868) Thanks [@louistrue](https://github.com/louistrue)! - IfcAnnotation overlays now follow the model ([#8767](https://github.com/LTplus-AG/ifc-lite/issues/8767)). In 3D, annotation lines, filled regions and labels are clipped by the section plane, any extra cutting planes and the clip box, the same way the model's geometry is. A label disappears whole once its anchor is cut away. Clipping is opt-in with a new `sectionClipped` flag, default `false`, so existing callers see no change: as an option on `Renderer.setLineOverlay(channel, vertices, { sectionClipped })` (new `LineOverlayOptions` type) and as a field on `SymbolicFillInput` and `SymbolicTextInput`. The grid and the other reference layers still draw whole. In the viewer, annotations also respect isolation: isolating elements, soloing a storey or filtering by class now hides annotations outside that set, the same as it does for meshes.
+
+- [#8782](https://github.com/LTplus-AG/ifc-lite/pull/8782) [`cc5dcbd`](https://github.com/LTplus-AG/ifc-lite/commit/cc5dcbd4ee6cf35d624b0247edbb89ef35381c6e) Thanks [@louistrue](https://github.com/louistrue)! - Load E57, PLY and LAS point clouds larger than 4 GB. `streamPointCloud` now applies its 4 GB default `maxFileSize` only to formats whose source reads the whole file (PCD, PTS, XYZ, LAZ); E57, PLY and LAS stream from bounded windows and have no default ceiling. LAS strided reads are now capped at 16 MiB per read, so LAS peak memory no longer grows with file size. An explicit `maxFileSize` still applies to every format ([#8773](https://github.com/LTplus-AG/ifc-lite/issues/8773)).
+- Updated dependencies [[`b39b157`](https://github.com/LTplus-AG/ifc-lite/commit/b39b1578fd76588b4d8d7c267cbb5da50b9e9868), [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd), [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd), [`d4e4533`](https://github.com/LTplus-AG/ifc-lite/commit/d4e4533046dc18eeb3eec1a838221c069cbe9ddb), [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd), [`cc5dcbd`](https://github.com/LTplus-AG/ifc-lite/commit/cc5dcbd4ee6cf35d624b0247edbb89ef35381c6e), [`2b2a27a`](https://github.com/LTplus-AG/ifc-lite/commit/2b2a27a1873071e5e6f129ba0cdb8ffa7c3410cd)]:
+  - @ifc-lite/renderer@7.2.0
+  - @ifc-lite/pointcloud@0.15.0
+  - @ifc-lite/ifcx@4.6.1
+
 ## 5.5.0
 
 ### Minor Changes
